@@ -1,0 +1,12 @@
+{
+  "id": 300,
+  "name": "clair-gen2",
+  "pokemons": [
+    "Flygon",
+    "Haxorus",
+    "Tyrantrum",
+    "Dragonite",
+    "Hydreigon",
+    "Kingdra"
+  ]
+}

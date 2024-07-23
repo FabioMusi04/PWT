@@ -1,0 +1,12 @@
+{
+  "id": 860,
+  "name": "oak-gen1",
+  "pokemons": [
+    "Venusaur",
+    "Charizard",
+    "Blastoise",
+    "Tauros",
+    "Mew",
+    "Nidoking"
+  ]
+}
