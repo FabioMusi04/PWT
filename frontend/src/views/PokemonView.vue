@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import PokemonTable from "@/components/PokemonTable.vue";
+import PokemonTable from "@/components/PokemonTableComponent.vue";
 
 export default {
   data() {

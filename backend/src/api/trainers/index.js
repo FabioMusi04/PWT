@@ -1,5 +1,6 @@
 import Router from 'express';
 import Trainer from './class.js';
+import Pokemon from '../pokemons/class.js';
 import _ from 'lodash';
 
 const app = Router();
@@ -43,6 +44,21 @@ app.get('/:id', (req, res) => {
   if (!trainer) {
     res.status(404).json({ error: 'Trainer not found' });
   }
+  trainer.pokemons = _.map(trainer.pokemons, (pokemonName) => {
+    const lowerCaseName = pokemonName?.toString().toLowerCase();
+    if (!lowerCaseName) {
+      return null;
+    }
+
+    const p = _.find(Pokemon.GetPokemons(), { name: lowerCaseName });
+    if (!p) {
+      return null;
+    }
+    p.hp = 100;
+    p.currentHp = 100;
+    return p;
+  });
+
   res.json(trainer);
 });
 

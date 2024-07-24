@@ -15,6 +15,8 @@ export default createStore({
       if (state.selectedPokemons.length >= 3) {
         state.selectedPokemons.shift();
       }
+      pokemon.hp = 100;
+      pokemon.currentHp = 100;
       state.selectedPokemons.push(pokemon);
     },
     removeSelectedPokemon(state, pokemon) {

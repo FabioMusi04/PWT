@@ -1,21 +1,15 @@
 <template>
   <div class="tournament-view">
-    <button class="btn btn-primary" @click="redirectToBattle">Play</button>
     <TournamentBrackets />
   </div>
 </template>
 
 <script>
-import TournamentBrackets from "@/components/TournamentBrackets.vue";
+import TournamentBrackets from "@/components/TournamentBracketsComponent.vue";
 export default {
   name: "TournamentView",
   components: {
     TournamentBrackets,
-  },
-  methods: {
-    redirectToBattle() {
-      this.$router.push("/battle");
-    },
   },
 };
 </script>

@@ -1,4 +1,6 @@
 <template>
+  <button class="btn btn-primary" @click="redirectToBattle">Play</button>
+
   <div class="tournament-brackets">
     <table class="bracket">
       <thead>
@@ -108,6 +110,41 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+    },
+
+    redirectToBattle() {
+      const getPlayerOpponent = () => {
+        const isInLeftSide = this.leftTrainersMatch.find(
+          (match) =>
+            match.player1.name === "player" || match.player2.name === "player"
+        );
+        if (isInLeftSide) {
+          const opponent =
+            isInLeftSide.player1.name === "player"
+              ? isInLeftSide.player2
+              : isInLeftSide.player1;
+          return opponent;
+        }
+
+        const isInRightSide = this.rightTrainersMatch.find(
+          (match) =>
+            match.player1.name === "player" || match.player2.name === "player"
+        );
+        if (isInRightSide) {
+          const opponent =
+            isInRightSide.player1.name === "player"
+              ? isInRightSide.player2
+              : isInRightSide.player1;
+          return opponent;
+        }
+      };
+
+      const opponent = getPlayerOpponent();
+      if (!opponent) return;
+      this.$router.push({
+        name: "battle",
+        query: { opponentId: opponent.id },
+      });
     },
   },
 };

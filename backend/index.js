@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import environment from './config.js';
+import db from './src/services/db/index.js';
 
 const app = express();
 
@@ -37,8 +38,11 @@ app.use((req, res, next) => {
     res.status(404).send('Sorry cant find that!');
 });
 
-app.listen(environment.PORT, () => {
+app.listen(environment.PORT, async() => {
     PokemonClass.LoadPokemonsData();
     TrainerClass.LoadTrainersData();
+
+    //await db.connectToMongoDB();
+
     console.log(`Server is running on http://localhost:${environment.PORT}`);
 });
