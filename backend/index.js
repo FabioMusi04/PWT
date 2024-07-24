@@ -29,6 +29,14 @@ app.use('/pokemons', pokemons);
 app.use('/trainers', trainers);
 app.use('/tournaments', tournaments);
 
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.use((req, res, next) => {
+    res.status(404).send('Sorry cant find that!');
+});
+
 app.listen(environment.PORT, () => {
     PokemonClass.LoadPokemonsData();
     TrainerClass.LoadTrainersData();
