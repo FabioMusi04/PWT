@@ -13,8 +13,6 @@
 export default {
   methods: {
     redirectToGame() {
-      // Add your redirection logic here
-      // For example, you can use Vue Router to navigate to the game page
       this.$router.push("/pokemonChoice");
     },
   },

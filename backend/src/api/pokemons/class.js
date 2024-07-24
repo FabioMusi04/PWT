@@ -10,10 +10,10 @@ class Pokemon {
   }
 
   static LoadPokemonsData() {
-    for(let dir of fs.readdirSync(__dirname + '/../../assets/pokemons/data/')) {
-      for (let file of fs.readdirSync(__dirname + '/../../assets/pokemons/data/' + dir)) {
+    for(let dir of fs.readdirSync(__dirname + '/../../../assets/pokemons/data/')) {
+      for (let file of fs.readdirSync(__dirname + '/../../../assets/pokemons/data/' + dir)) {
         if (!file.includes('.json')) return;
-        const data = JSON.parse(fs.readFileSync(__dirname + '/../../assets/pokemons/data/' + dir + "/" + file));
+        const data = JSON.parse(fs.readFileSync(__dirname + '/../../../assets/pokemons/data/' + dir + "/" + file));
 
         let usefullData = _.pick(data, ['name', 'id', 'height', 'weight', 'types', 'moves', 'stats', 'order']);
         
