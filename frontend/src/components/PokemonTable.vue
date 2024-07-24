@@ -50,7 +50,7 @@
             >
               <td>
                 <img
-                  :src="'http://localhost:3000' + pokemon.sprites.front"
+                  :src="`${backEndUrl}${pokemon.sprites.front}`"
                   :alt="pokemon.name"
                   class="img-fluid"
                 />
@@ -79,7 +79,7 @@
             >
               <td>
                 <img
-                  :src="'http://localhost:3000' + pokemon.sprites.front"
+                  :src="`${backEndUrl}${pokemon.sprites.front}`"
                   :alt="pokemon.name"
                   class="img-fluid"
                 />
@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../axios/axios.js";
 
 export default {
   data() {
@@ -128,6 +128,7 @@ export default {
       totalPages: 0,
       search: "",
       limit: 10,
+      backEndUrl: process.env.VUE_APP_BACKEND_URL || "http://localhost:3000",
     };
   },
   computed: {
@@ -159,7 +160,7 @@ export default {
       const queryString = queryParams.join("&");
 
       axios
-        .get(`http://localhost:3000/pokemons/?${queryString}`)
+        .get(`/pokemons/?${queryString}`)
         .then((response) => {
           this.pokemonData = response.data.pokemons;
           this.itemsPerPage = response.data.count;

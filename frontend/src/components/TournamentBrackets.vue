@@ -20,20 +20,16 @@
             <p v-if="leftTrainersMatch[index - 1]">
               {{ leftTrainersMatch[index - 1].player1.name }}
               <img
-                :src="
-                  'http://localhost:3000/' +
-                  leftTrainersMatch[index - 1].player1.sprite
-                "
+                :src="`
+                  ${backEndUrl}${leftTrainersMatch[index - 1].player1.sprite}`"
                 alt="Trainer Sprite"
               />
             </p>
             <p v-if="leftTrainersMatch[index - 1]">
               {{ leftTrainersMatch[index - 1].player2.name }}
               <img
-                :src="
-                  'http://localhost:3000/' +
-                  leftTrainersMatch[index - 1].player2.sprite
-                "
+                :src="`
+                  ${backEndUrl}${leftTrainersMatch[index - 1].player2.sprite}`"
                 alt="Trainer Sprite"
               />
             </p>
@@ -63,20 +59,16 @@
             <p v-if="rightTrainersMatch[index - 1]">
               {{ rightTrainersMatch[index - 1].player1.name }}
               <img
-                :src="
-                  'http://localhost:3000/' +
-                  rightTrainersMatch[index - 1].player1.sprite
-                "
+                :src="`
+                  ${backEndUrl}${rightTrainersMatch[index - 1].player1.sprite}`"
                 alt="Trainer Sprite"
               />
             </p>
             <p v-if="rightTrainersMatch[index - 1]">
               {{ rightTrainersMatch[index - 1].player2.name }}
               <img
-                :src="
-                  'http://localhost:3000/' +
-                  rightTrainersMatch[index - 1].player2.sprite
-                "
+                :src="`
+              ${backEndUrl}${rightTrainersMatch[index - 1].player2.sprite}`"
                 alt="Trainer Sprite"
               />
             </p>
@@ -88,6 +80,7 @@
 </template>
 
 <script>
+import axios from "../axios/axios.js";
 export default {
   data() {
     return {
@@ -97,6 +90,7 @@ export default {
         player1: { name: "", sprite: "" },
         player2: { name: "", sprite: "" },
       },
+      backEndUrl: process.env.VUE_APP_BACKEND_URL || "http://localhost:3000",
     };
   },
   mounted() {
@@ -104,15 +98,15 @@ export default {
   },
   methods: {
     fetchTrainers() {
-      fetch("http://localhost:3000/tournaments")
-        .then((response) => response.json())
-        .then((data) => {
-          this.leftTrainersMatch = data.bracket.slice(0, 8);
-          this.rightTrainersMatch = data.bracket.slice(8, 16);
-          this.finalMatch = data.finalMatch;
+      axios
+        .get("/tournaments")
+        .then((response) => {
+          const trainers = response.data.bracket;
+          this.leftTrainersMatch = trainers.slice(0, 8);
+          this.rightTrainersMatch = trainers.slice(8, 16);
         })
         .catch((error) => {
-          console.error("Error fetching trainers:", error);
+          console.error(error);
         });
     },
   },
