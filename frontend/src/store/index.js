@@ -1,4 +1,9 @@
 import { createStore } from "vuex";
+import VuexPersistence from "vuex-persist";
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+});
 
 export default createStore({
   state: {
@@ -6,8 +11,8 @@ export default createStore({
   },
   getters: {
     getSelectedPokemons: (state) => state.selectedPokemons,
-    isSelectedPokemon: (state) => (pokemon) => {
-      return state.selectedPokemons.includes(pokemon);
+    isSelectedPokemon: (state) => (pokemonId) => {
+      return state.selectedPokemons.find((pk) => pk.id === pokemonId);
     },
   },
   mutations: {
@@ -27,4 +32,5 @@ export default createStore({
   },
   actions: {},
   modules: {},
+  plugins: [vuexLocal.plugin],
 });

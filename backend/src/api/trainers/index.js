@@ -44,22 +44,21 @@ app.get('/:id', (req, res) => {
   if (!trainer) {
     res.status(404).json({ error: 'Trainer not found' });
   }
-  trainer.pokemons = _.map(trainer.pokemons, (pokemonName) => {
-    const lowerCaseName = pokemonName?.toString().toLowerCase();
-    if (!lowerCaseName) {
-      return null;
-    }
 
-    const p = _.find(Pokemon.GetPokemons(), { name: lowerCaseName });
-    if (!p) {
-      return null;
+  for (const pokemon of trainer.pokemons) {
+    if (typeof pokemon !== 'string') {
+      return res.json(trainer);
     }
-    p.hp = 100;
-    p.currentHp = 100;
-    return p;
-  });
-
-  res.json(trainer);
+    const pokemonData = _.find(Pokemon.GetPokemons(), { name: pokemon.toLowerCase() });
+    if (!pokemonData) {
+      return res.status(404).json({ error: 'Pokemon not found' });
+    }
+    pokemonData.currentHp = 100;
+    pokemonData.hp = 100;
+    trainer.pokemons[trainer.pokemons.indexOf(pokemon)] = pokemonData;
+  }
+  
+  return res.json(trainer);
 });
 
 export default app;

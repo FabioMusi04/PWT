@@ -21,7 +21,6 @@ export default {
         .then((response) => {
           this.rivalInfo = response.data;
           console.log(response.data);
-          console.log(this.$store.state);
         })
         .catch((error) => {
           console.error(error);
@@ -38,6 +37,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Your custom styles here */
-</style>
+<style scoped></style>

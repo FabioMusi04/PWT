@@ -1,10 +1,10 @@
 <template>
   <div>
     <h1>Select 3 Pokemons</h1>
-    <pokemon-table />
-    <div v-if="$store.state.selectedPokemons.length === 3" class="m-2">
-      <router-link to="/tournament">Start Tournament</router-link>
+    <div v-if="$store.state.selectedPokemons.length === 3" class="m-3">
+      <router-link class="link" to="/tournament">Start Tournament</router-link>
     </div>
+    <pokemon-table />
   </div>
 </template>
 
@@ -21,6 +21,16 @@ export default {
 };
 </script>
 
-<style>
-/* CSS styles for the page go here */
+<style scoped>
+h1 {
+  text-align: center;
+}
+.link {
+  text-align: center;
+  color: white;
+  background-color: #f5000c;
+  padding: 10px;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+}
 </style>

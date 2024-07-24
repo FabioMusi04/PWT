@@ -4,7 +4,7 @@
       <!-- Pokémon List -->
       <div class="col-lg-6">
         <h2>Pokémon List</h2>
-        <div class="form-group mb-5">
+        <div class="form-group mb-4">
           <label for="generation">Generation:</label>
           <select
             id="generation"
@@ -31,41 +31,43 @@
             @input="searchPokemon"
           />
         </div>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Picture</th>
-              <th scope="col">Name</th>
-              <th scope="col">Generation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="pokemon in pokemonData"
-              :key="pokemon.id"
-              :class="{
-                highlighted: $store.getters.isSelectedPokemon(pokemon),
-              }"
-              @click="toggleHighlight(pokemon)"
-            >
-              <td>
-                <img
-                  :src="`${backEndUrl}${pokemon.sprites.front}`"
-                  :alt="pokemon.name"
-                  class="img-fluid"
-                />
-              </td>
-              <td>{{ pokemon.name }}</td>
-              <td>{{ pokemon.generation }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="tablerounededCorner mb-2">
+          <table class="table table-sm table-hover table-bordered roundedTable">
+            <thead>
+              <tr>
+                <th scope="col">Picture</th>
+                <th scope="col">Name</th>
+                <th scope="col">Generation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="pokemon in pokemonData"
+                :key="pokemon.id"
+                :class="{
+                  highlighted: $store.getters.isSelectedPokemon(pokemon.id),
+                }"
+                @click="toggleHighlight(pokemon)"
+              >
+                <td>
+                  <img
+                    :src="`${backEndUrl}${pokemon.sprites.front}`"
+                    :alt="pokemon.name"
+                    class="img-fluid"
+                  />
+                </td>
+                <td>{{ pokemon.name }}</td>
+                <td>{{ pokemon.generation }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Selected Pokémon Team -->
       <div class="col-lg-6">
         <h2>Selected Pokémon Team</h2>
-        <table class="table table-striped">
+        <table class="table table-sm">
           <thead>
             <tr>
               <th scope="col">Picture</th>
@@ -92,18 +94,18 @@
     </div>
 
     <!-- Pagination -->
-    <div class="row mt-3">
+    <div class="row pb-3 mt-3">
       <div class="col-lg-12 d-flex justify-content-center">
         <button
-          class="btn btn-primary"
+          class="btn btn-warning"
           :disabled="currentPage === 1"
           @click="previousPage"
         >
           Previous
         </button>
-        <span class="align-self-center">{{ currentPage }}</span>
+        <span class="align-self-center mx-2">{{ currentPage }}</span>
         <button
-          class="btn btn-primary"
+          class="btn btn-warning"
           :disabled="pokemonData.length === 0"
           @click="nextPage"
         >
@@ -174,7 +176,7 @@ export default {
     },
 
     toggleHighlight(pokemon) {
-      if (this.$store.getters.isSelectedPokemon(pokemon)) {
+      if (this.$store.getters.isSelectedPokemon(pokemon.id)) {
         this.$store.commit("removeSelectedPokemon", pokemon);
       } else {
         this.$store.commit("addSelectedPokemon", pokemon);
@@ -206,6 +208,18 @@ export default {
 
 <style>
 .highlighted > td {
-  background-color: yellow;
+  background-color: yellow !important;
+}
+.tablerounededCorner {
+  border: 1px solid #000000;
+  border-radius: 1em;
+}
+
+.roundedTable {
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
 }
 </style>

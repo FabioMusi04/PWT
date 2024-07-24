@@ -66,20 +66,21 @@
           </div>
         </div>
         <div class="col-md-6">
-          <!-- Battle log -->
+          <!-- Battle Actios -->
           <div class="card">
             <div class="card-body">
-              <!-- Display battle log -->
+              <!-- Display Battle actions -->
             </div>
           </div>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-md-12">
-          <!-- Battle actions -->
+          <!-- Battle Logs -->
           <div class="card">
             <div class="card-body">
-              <!-- Display battle actions (attack, switch Pokemon, etc.) -->
+              <!-- Display battle log -->
+              <p>{{ battleText }}</p>
             </div>
           </div>
         </div>
@@ -110,6 +111,7 @@ export default {
         currentHp: 0,
         name: "",
       },
+      battleText: "",
       backEndUrl: process.env.VUE_APP_BACKEND_URL || "http://localhost:3000",
     };
   },
@@ -119,9 +121,10 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    this.battleText = "Battle Begins!";
+  },
 };
 </script>
 
-<style scoped>
-/* Your custom styles here */
-</style>
+<style scoped></style>
