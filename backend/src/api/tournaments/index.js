@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
   tournament.push({
     name: 'player',
-    sprite: '',
+    sprite: '/trainers/sprites/BattleFront/player.png',
     pokemons: []
   });
 

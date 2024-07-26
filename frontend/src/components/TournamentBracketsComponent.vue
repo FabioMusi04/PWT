@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-primary" @click="redirectToBattle">Play</button>
+  <button class="btn btn-danger" @click="redirectToBattle">Play</button>
 
   <div class="tournament-brackets">
     <table class="bracket">

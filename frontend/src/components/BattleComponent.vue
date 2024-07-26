@@ -2,36 +2,15 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
-          <!-- Player's Pokemon details -->
-          <div class="card">
-            <div class="card-body">
-              <!-- Display player's Pokemon image, name, level, etc. -->
-              <img
-                :src="`${backEndUrl}${firstPlayerPokemon?.sprites.back}`"
-                alt="Pokemon Sprite"
-              />
-              <p>{{ firstPlayerPokemon?.name }}</p>
-
-              <div class="progress">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  :style="{ width: firstPlayerPokemon.hp + '%' }"
-                >
-                  <span class="sr-only"
-                    >{{ firstPlayerPokemon.currentHp }}%</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-6 text-center">
+          <!-- Opponent's Trainer Sprite -->
+          <img
+            :src="`${backEndUrl}${rivalInfo?.sprite}`"
+            alt="Rival Trainer Sprite"
+            class="trainer-sprite"
+          />
           <!-- Opponent's Pokemon details -->
-          <div class="card">
+          <div class="card mt-3">
             <div class="card-body">
               <!-- Display opponent's Pokemon image, name, level, etc. -->
               <img
@@ -55,6 +34,38 @@
             </div>
           </div>
         </div>
+        <div class="col-md-6 text-center">
+          <!-- Player's Trainer Sprite -->
+          <img
+            :src="`${backEndUrl}${this.$store.state.player.sprite}`"
+            alt="Player Trainer Sprite"
+            class="trainer-sprite"
+          />
+          <!-- Player's Pokemon details -->
+          <div class="card mt-3">
+            <div class="card-body">
+              <!-- Display player's Pokemon image, name, level, etc. -->
+              <img
+                :src="`${backEndUrl}${firstPlayerPokemon?.sprites.back}`"
+                alt="Pokemon Sprite"
+              />
+              <p>{{ firstPlayerPokemon?.name }}</p>
+              <div class="progress">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  :style="{ width: firstPlayerPokemon.hp + '%' }"
+                >
+                  <span class="sr-only"
+                    >{{ firstPlayerPokemon.currentHp }}%</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="row mt-3">
         <div class="col-md-6">
@@ -66,7 +77,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          <!-- Battle Actios -->
+          <!-- Battle Actions -->
           <div class="card">
             <div class="card-body">
               <!-- Display Battle actions -->
@@ -103,7 +114,7 @@ export default {
             currentHp: 0,
             name: "",
           },
-      firstPlayerPokemon: this.$store.state.selectedPokemons[0] || {
+      firstPlayerPokemon: this.$store.state.player.selectedPokemons[0] || {
         sprites: {
           front: "",
         },

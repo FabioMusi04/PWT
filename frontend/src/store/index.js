@@ -7,25 +7,29 @@ const vuexLocal = new VuexPersistence({
 
 export default createStore({
   state: {
-    selectedPokemons: [],
+    player: {
+      name: "Player",
+      selectedPokemons: [],
+      sprite: "/trainers/sprites/BattleBack/player.png",
+    },
   },
   getters: {
-    getSelectedPokemons: (state) => state.selectedPokemons,
+    getSelectedPokemons: (state) => state.player.selectedPokemons,
     isSelectedPokemon: (state) => (pokemonId) => {
-      return state.selectedPokemons.find((pk) => pk.id === pokemonId);
+      return state.player.selectedPokemons.find((pk) => pk.id === pokemonId);
     },
   },
   mutations: {
     addSelectedPokemon(state, pokemon) {
-      if (state.selectedPokemons.length >= 3) {
-        state.selectedPokemons.shift();
+      if (state.player.selectedPokemons.length >= 3) {
+        state.player.selectedPokemons.shift();
       }
       pokemon.hp = 100;
       pokemon.currentHp = 100;
-      state.selectedPokemons.push(pokemon);
+      state.player.selectedPokemons.push(pokemon);
     },
     removeSelectedPokemon(state, pokemon) {
-      state.selectedPokemons = state.selectedPokemons.filter(
+      state.player.selectedPokemons = state.player.selectedPokemons.filter(
         (pk) => pk.id !== pokemon.id
       );
     },

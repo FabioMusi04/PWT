@@ -9,7 +9,7 @@ class Trainer {
 
   static LoadTrainersData() {
     for(let file of fs.readdirSync(__dirname + '/../../../assets/trainers/sprites/BattleFront')) {
-      if (!file.includes('.png')) return;
+      if (!file.includes('.png') || file.includes('player')) return;
 
       let dataFile = fs.readFileSync(__dirname + '/../../../assets/trainers/data/' + file.split('.')[0] + '.json');
 

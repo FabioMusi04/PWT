@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Select 3 Pokemons</h1>
-    <div v-if="$store.state.selectedPokemons.length === 3" class="m-3">
+    <div v-if="$store.state.player.selectedPokemons.length === 3" class="m-3">
       <router-link class="link" to="/tournament">Start Tournament</router-link>
     </div>
     <pokemon-table />

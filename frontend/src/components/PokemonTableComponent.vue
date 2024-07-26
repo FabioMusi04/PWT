@@ -76,7 +76,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="pokemon in $store.state.selectedPokemons"
+              v-for="pokemon in $store.state.player.selectedPokemons"
               :key="pokemon.id"
             >
               <td>
