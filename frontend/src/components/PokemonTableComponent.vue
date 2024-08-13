@@ -32,32 +32,24 @@
           />
         </div>
         <div class="tablerounededCorner mb-2">
-          <table class="table table-sm table-hover table-bordered roundedTable">
-            <thead>
-              <tr>
-                <th scope="col">Picture</th>
-                <th scope="col">Name</th>
-                <th scope="col">Generation</th>
-              </tr>
-            </thead>
+          <table class="table table-sm table-bordered roundedTable">
             <tbody>
-              <tr
-                v-for="pokemon in pokemonData"
-                :key="pokemon.id"
-                :class="{
-                  highlighted: $store.getters.isSelectedPokemon(pokemon.id),
-                }"
-                @click="toggleHighlight(pokemon)"
-              >
-                <td>
-                  <img
-                    :src="`${backEndUrl}${pokemon.sprites.front}`"
-                    :alt="pokemon.name"
-                    class="img-fluid"
-                  />
-                </td>
-                <td>{{ pokemon.name }}</td>
-                <td>{{ pokemon.generation }}</td>
+              <tr v-for="(row, rowIndex) in chunkedPokemonData" :key="rowIndex">
+                <td
+                  v-for="pokemon in row"
+                  :key="pokemon.id"
+                  :class="{
+                    highlighted: $store.getters.isSelectedPokemon(pokemon.id),
+                  }"
+                  @click="toggleHighlight(pokemon)"
+                  :style="{
+                    textAlign: 'center',
+                    background: `transparent url(${backEndUrl}${pokemon.sprites.front}) center no-repeat`,
+                    backgroundSize: 'contain',
+                    width: 'auto',
+                    height: '75px',
+                  }"
+                />
               </tr>
             </tbody>
           </table>
@@ -125,11 +117,11 @@ export default {
       pokemonData: [],
       selectedGeneration: null,
       currentPage: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 0,
       skip: 0,
       totalPages: 0,
       search: "",
-      limit: 10,
+      limit: 36,
       backEndUrl: process.env.VUE_APP_BACKEND_URL || "http://localhost:3000",
     };
   },
@@ -139,6 +131,14 @@ export default {
     },
     generations() {
       return [1, 2, 3, 4, 5, 6, 7, 8];
+    },
+    chunkedPokemonData() {
+      const chunkSize = 6;
+      const chunks = [];
+      for (let i = 0; i < this.pokemonData.length; i += chunkSize) {
+        chunks.push(this.pokemonData.slice(i, i + chunkSize));
+      }
+      return chunks;
     },
   },
   methods: {
