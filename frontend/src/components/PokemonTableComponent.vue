@@ -26,7 +26,7 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Search"
+            placeholder="Search your Pokémon..."
             v-model="search"
             @input="searchPokemon"
           />
@@ -34,7 +34,11 @@
         <div class="tablerounededCorner mb-2">
           <table class="table table-sm table-bordered roundedTable">
             <tbody>
-              <tr v-for="(row, rowIndex) in chunkedPokemonData" :key="rowIndex">
+              <tr
+                v-for="(row, rowIndex) in chunkedPokemonData"
+                :key="rowIndex"
+                style="text-align: center; vertical-align: middle"
+              >
                 <td
                   v-for="pokemon in row"
                   :key="pokemon.id"
@@ -48,6 +52,7 @@
                     backgroundSize: 'contain',
                     width: 'auto',
                     height: '75px',
+                    cursor: 'pointer',
                   }"
                 />
               </tr>
@@ -64,21 +69,37 @@
             <tr>
               <th scope="col">Picture</th>
               <th scope="col">Name</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="pokemon in $store.state.player.selectedPokemons"
               :key="pokemon.id"
+              style="text-align: center; vertical-align: middle"
             >
+              <td
+                :style="{
+                  textAlign: 'center',
+                  background: `white url(${backEndUrl}${pokemon.sprites.front}) center no-repeat`,
+                  backgroundSize: 'contain',
+                  width: 'auto',
+                  height: '75px',
+                  cursor: 'pointer',
+                }"
+              ></td>
+              <td>{{ pokemon.name }}</td>
               <td>
-                <img
-                  :src="`${backEndUrl}${pokemon.sprites.front}`"
-                  :alt="pokemon.name"
-                  class="img-fluid"
+                <i
+                  class="bi bi-search btn btn-info me-2"
+                  @click="$store.commit('showPokemonInfo', pokemon)"
+                />
+
+                <i
+                  class="bi bi-trash btn btn-danger"
+                  @click="$store.commit('removeSelectedPokemon', pokemon)"
                 />
               </td>
-              <td>{{ pokemon.name }}</td>
             </tr>
           </tbody>
         </table>
@@ -115,7 +136,7 @@ export default {
   data() {
     return {
       pokemonData: [],
-      selectedGeneration: null,
+      selectedGeneration: -1,
       currentPage: 1,
       itemsPerPage: 0,
       skip: 0,
@@ -207,7 +228,7 @@ export default {
 </script>
 
 <style>
-.highlighted > td {
+.highlighted {
   background-color: yellow !important;
 }
 .tablerounededCorner {
