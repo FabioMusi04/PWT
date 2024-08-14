@@ -1,6 +1,11 @@
 <template>
   <div class="container-fluid">
     <div class="row">
+      <PokemonViewComponent
+        v-show="pokemonModal"
+        :pokemon="selectedPokemon"
+        @close="closeModal"
+      />
       <!-- Pokémon List -->
       <div class="col-lg-6">
         <h2>Pokémon List</h2>
@@ -92,7 +97,7 @@
               <td>
                 <i
                   class="bi bi-search btn btn-info me-2"
-                  @click="$store.commit('showPokemonInfo', pokemon)"
+                  @click="showModal(pokemon)"
                 />
 
                 <i
@@ -131,6 +136,8 @@
 
 <script>
 import axios from "../axios/axios.js";
+import PokemonViewComponent from "./PokemonViewComponent.vue";
+import { Modal } from "bootstrap";
 
 export default {
   data() {
@@ -144,7 +151,12 @@ export default {
       search: "",
       limit: 36,
       backEndUrl: process.env.VUE_APP_BACKEND_URL || "http://localhost:3000",
+      pokemonModal: null,
+      selectedPokemon: null,
     };
+  },
+  components: {
+    PokemonViewComponent,
   },
   computed: {
     selectedPokemons() {
@@ -220,6 +232,18 @@ export default {
     searchPokemon() {
       this.fetchPokemonData();
     },
+    showModal(pokemon) {
+      this.selectedPokemon = pokemon;
+
+      this.pokemonModal = Modal.getOrCreateInstance("#pokemonModal", {
+        keyboard: false,
+      });
+      this.pokemonModal.show();
+    },
+    closeModal() {
+      this.pokemonModal.hide();
+      this.selectedPokemon = null;
+    },
   },
   mounted() {
     this.fetchPokemonData();
@@ -232,7 +256,7 @@ export default {
   background-color: yellow !important;
 }
 .tablerounededCorner {
-  border: 1px solid #000000;
+  border: 2.5px solid #ffffff;
   border-radius: 1em;
 }
 
