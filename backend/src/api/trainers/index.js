@@ -1,6 +1,7 @@
 import Router from 'express';
 import Trainer from './class.js';
 import Pokemon from '../pokemons/class.js';
+import Moves from '../moves/class.js';
 import _ from 'lodash';
 
 const app = Router();
@@ -15,7 +16,7 @@ app.get('/', (req, res) => {
       return trainers.name.toLowerCase().includes(search.toLowerCase());
     });
   }
-  
+
   if (skip) {
     trainers = _.slice(trainers, parseInt(skip));
   }
@@ -51,13 +52,32 @@ app.get('/:id', (req, res) => {
     }
     const pokemonData = _.find(Pokemon.GetPokemons(), { name: pokemon.toLowerCase() });
     if (!pokemonData) {
-      return res.status(404).json({ error: 'Pokemon not found' });
+      continue;
     }
     pokemonData.currentHp = 100;
     pokemonData.hp = 100;
+
+    let moves = _.cloneDeep(pokemonData.moves);
+    pokemonData.moves = [];
+    for (let i = 0; i < 4; i++) {
+      let randomIndex = Math.floor(Math.random() * moves.length);
+      const moveInfo = _.find(Moves.GetMoves(), (m) => {
+        return m.name.toLowerCase() === moves[randomIndex].move.name.toLowerCase();
+      });
+      if (!moveInfo) {
+        i--;
+        continue;
+      }
+      pokemonData.moves.push(moveInfo);
+      moves.splice(randomIndex, 1);
+    }
     trainer.pokemons[trainer.pokemons.indexOf(pokemon)] = pokemonData;
   }
-  
+
+  trainer.pokemons = _.filter(trainer.pokemons, (pokemon) => {
+    return typeof pokemon === 'object';
+  });
+
   return res.json(trainer);
 });
 

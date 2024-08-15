@@ -26,6 +26,7 @@ export default createStore({
       }
       pokemon.hp = 100;
       pokemon.currentHp = 100;
+      // moves info
       state.player.selectedPokemons.push(pokemon);
     },
     removeSelectedPokemon(state, pokemon) {

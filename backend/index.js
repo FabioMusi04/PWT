@@ -19,6 +19,7 @@ app.use(express.static(__dirname + '/assets'));
 
 import PokemonClass from './src/api/pokemons/class.js';
 import TrainerClass from './src/api/trainers/class.js';
+import MovesClass from './src/api/moves/class.js';
 
 import pokemons from './src/api/pokemons/index.js';
 import trainers from './src/api/trainers/index.js';
@@ -41,6 +42,8 @@ app.use((req, res, next) => {
 app.listen(environment.PORT, async() => {
     PokemonClass.LoadPokemonsData();
     TrainerClass.LoadTrainersData();
+    MovesClass.LoadMovesData();
+    console.log('Data loaded');
 
     //await db.connectToMongoDB();
 

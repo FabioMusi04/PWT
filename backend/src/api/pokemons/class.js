@@ -11,6 +11,7 @@ class Pokemon {
 
   static LoadPokemonsData() {
     for(let dir of fs.readdirSync(__dirname + '/../../../assets/pokemons/data/')) {
+      if (!dir.includes('generation')) return;
       for (let file of fs.readdirSync(__dirname + '/../../../assets/pokemons/data/' + dir)) {
         if (!file.includes('.json')) return;
         const data = JSON.parse(fs.readFileSync(__dirname + '/../../../assets/pokemons/data/' + dir + "/" + file));

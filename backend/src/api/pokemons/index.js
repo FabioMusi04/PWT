@@ -10,8 +10,6 @@ app.get('/', (req, res) => {
 
   let pokemons = Pokemon.GetPokemons();
 
-  console.log(generation, limit, skip, count, search);
-
   if (generation) {
     pokemons = _.filter(pokemons, { generation: parseInt(generation) });
   }
